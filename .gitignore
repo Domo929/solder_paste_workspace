@@ -2,6 +2,7 @@
 
 devel/
 build/
+.catkin_workspace
 
 ## Python ignore 
 
