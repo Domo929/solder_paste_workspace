@@ -13,3 +13,12 @@ I would also reccomend adding this line:
 `alias bashupdate="source ~/.bashrc"`
 
 This allows you to run the command `bashupdate` which will re-source your `.bashrc` file. This is especially important when you make new packages or executables, otherwise they won't show up in `rosrun` or `roslaunch` without first closing and reopening your terminal. This just lets you skip that step.
+
+
+## Creating Packages
+
+[ROS Tutorials for how to create ROS Packages](http://wiki.ros.org/ROS/Tutorials/catkin/CreatingPackage)
+
+Make sure to know what your package will rely on. If you are editing a known package you can set the dependencies to match the listed dependencies on that packages ROS page. Otherwise if you keep track of what your stuff relys on you just have to put the name of the packages in the depends arguments.
+
+For example. If I am writing a node that used the [vision_opencv](http://wiki.ros.org/vision_opencv) package (I use it for the `image_transport` package mainly) I would create my package by `catkin_create_package MY_PACKAGE_NAME vision_opencv roscpp rospy std_msgs ETC_DEPENDENCIES` 
