@@ -188,6 +188,8 @@ void loop() {
     digitalWrite(V4_Out_Pin, LOW);
   }
 
+  ROS_Status_msg.data = Output_msg;
+
   // Publish the status message
   ROS_Valve_Pub.publish( &ROS_Status_msg );
 
