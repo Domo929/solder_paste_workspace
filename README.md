@@ -22,3 +22,47 @@ This allows you to run the command `bashupdate` which will re-source your `.bash
 Make sure to know what your package will rely on. If you are editing a known package you can set the dependencies to match the listed dependencies on that packages ROS page. Otherwise if you keep track of what your stuff relys on you just have to put the name of the packages in the depends arguments.
 
 For example. If I am writing a node that used the [vision_opencv](http://wiki.ros.org/vision_opencv) package (I use it for the `image_transport` package mainly) I would create my package by `catkin_create_package MY_PACKAGE_NAME vision_opencv roscpp rospy std_msgs ETC_DEPENDENCIES` 
+
+
+## Dependences
+1. moveit!
+2. ROS industrial
+3. ROS Serial
+
+## Simulation using Gazebo
+1. Launch gazebo environment for abb_irb120 (more objects to be added)
+roslaunch abb_irb120_gazebo irb120_gazebo.launch
+
+2. Launch move_group with rviz for visualization
+roslaunch abb_irb120_moveit_config move_group.launch 
+
+3. Run motion control programe which calls move_group_interface
+rosrun moveit_tutorials move_group_interface_tutorial
+
+
+## Simulation using Robot Studio
+1. Follow the official tutorial to set up
+http://wiki.ros.org/abb/Tutorials
+
+2. Connect Robot Studio with ROS
+roslaunch abb_irb120_support robot_interface_download_irb120.launch robot_ip:=ip_address
+my address is 192.168.1.102
+
+3. Launch moveit planning execution and don't run the following commands if you just want to see how it works
+roslaunch abb_irb120_moveit_config moveit_planning_execution.launch
+
+4. Or Launch move group if you want to control the robot by your code
+roslaunch abb_irb120_moveit_config move_group.launch
+
+5. Run the robot
+rosrun moveit_nodes move_group_interface
+In rviz, choose Key Tool and click 'n' in keyboard for next step.
+After running this, you can see the robot moves to several poses.
+
+## Work with real Robot
+1. Connect Robot with Ethernet cable and build a connection between Ubuntu and the robot
+
+2. Connect ROS to the robot
+roslaunch abb_irb120_support robot_interface_download_irb120.launch robot_ip:=192.168.125.1
+
+3. Follow the steps in 5.3
