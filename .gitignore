@@ -2,6 +2,13 @@
 
 devel/
 build/
+
+old_group_work/F16_dynamics_ws/devel
+old_group_work/F16_dynamics_ws/build
+
+old_group_work/S17_dynamics_ws/devel
+old_group_work/S17_dynamics_ws/build
+
 .catkin_workspace
 
 ## Python ignore 
