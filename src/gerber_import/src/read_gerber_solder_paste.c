@@ -10,7 +10,7 @@
 #include "gerbv.h"
 #include <stdlib.h>
 
-void print_aperture_info(gerbv_aperture_t* aperture);
+void print_aperture_info(gerbv_aperture_t* aperture, gerbv_net_t* net);
 
 int main(int argc, char *argv[])
 {
@@ -39,7 +39,8 @@ int main(int argc, char *argv[])
     if ((currentNet->aperture_state != GERBV_APERTURE_STATE_OFF) &&
 	(workingImage->aperture[currentNet->aperture] != NULL)) {
 
-      print_aperture_info(workingImage->aperture[currentNet->aperture]);
+      print_aperture_info(workingImage->aperture[currentNet->aperture],
+			  currentNet);
     }
   }
 
@@ -50,27 +51,47 @@ int main(int argc, char *argv[])
 }
 
 
-void print_aperture_info(gerbv_aperture_t* aperture)
+void print_aperture_info(gerbv_aperture_t* aperture, gerbv_net_t* net)
 {
+  int print_offset = 1;
   
   switch(aperture->type) {
   case GERBV_APTYPE_CIRCLE: /*!< a round aperture */
-    printf("type: CIRCLE, diameter: %f\n", aperture->parameter[0]);
+    printf("type: CIRCLE, diameter: %f, num: %d, offset: ",
+	   aperture->parameter[0],
+	   aperture->nuf_parameters);
     break;
   case GERBV_APTYPE_RECTANGLE: /*!< a rectangular aperture */
-    printf("type: RECTANGLE, width: %f, height: %f\n",
-	   aperture->parameter[0], aperture->parameter[1]);
+    printf("type: RECTANGLE, width: %f, height: %f, num: %d, offset: ",
+	   aperture->parameter[0],
+	   aperture->parameter[1],
+	   aperture->nuf_parameters);
     break;
   case GERBV_APTYPE_OVAL: /*!< an ovular (obround) aperture */
-    printf("type: OVAL, width: %f, height: %f\n",
-	   aperture->parameter[0], aperture->parameter[1]);
+    printf("type: OVAL, width: %f, height: %f, num: %d, offset: ",
+	   aperture->parameter[0],
+	   aperture->parameter[1],
+	   aperture->nuf_parameters);
     break;
   case GERBV_APTYPE_POLYGON: /*!< a polygon aperture */
-    printf("type: POLYGON, width: %f, height: %f\n",
-	   aperture->parameter[0], aperture->parameter[1]);
+    printf("type: POLYGON, width: %f, height: %f, num: %d, offset: ",
+	   aperture->parameter[0],
+	   aperture->parameter[1],
+	   aperture->nuf_parameters);
+    break;
+  case GERBV_APTYPE_NONE:
+    // skip non apertures...
     break;
   default:
     printf("ERROR: unsupported aperture.\n");
+    print_offset = 0;
     break;
   }
+
+  if (print_offset != 0) {
+    printf("start { x: %f, y: %f }, stop { x: %f, y: %f }\n",
+	   net->start_x, net->start_y,
+	   net->stop_x, net->stop_y);
+  }
+
 }
