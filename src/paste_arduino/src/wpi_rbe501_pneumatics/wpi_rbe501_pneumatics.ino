@@ -6,44 +6,31 @@
 
   Installation Requirements:
   - You must install the rosserial library in your Arduino IDE
-  - You must install the Sparkfun AVR boards
-      - see:https://github.com/sparkfun/Arduino_Boards
-  - The board this code is running in is the
-      - Sparkfun Pro Micro (CHOOSE THE 5V OPTION under "Processor"
+  - The board in the Arduino module is an official Arduino Micro
 
-  Designed to interface with four P20381RF pneumatic valves
+  Designed to interface with four P20381RF pneumatic valves and the
+  3.5mm pedal switch jack of the KLT82A.
 
   This code accepts ROS boolean commands as well as
-  four discrete inputs from the controller box. The
+  five discrete inputs from the controller box. The
   ROS and discrete inputs are OR-ed to produce digital
-  outputs for four NPN transistor bases. The states of
+  outputs for five NPN transistor bases. The states of
   these transistor commands are published to the ROS NODE.
 
   This code expects a single byte message from ROS that
-  encapsulates all valve commands in the least significant
-  four bits as shown in the table below.
+  encapsulates all commands in the least significant
+  five bits as shown in the eaxmple table below.
 
   Similarly, the code will publish a single byte message of
-  the discrete states as presented in the table below.
+  the discrete states as the examples presented in the table
+  below.
 
-  Binary       Decimal        V1   V2   V3   V4
-  -----------------------------------------------
-  1111         15             on   on   on   on
-  1110         14             on   on   on   off
-  1101         13             on   on   off  on
-  1100         12             on   on   off  off
-  1011         11             on   off  on   on
-  1010         10             on   off  on   off
-  1001         9              on   off  off  on
-  1000         8              on   off  off  off
-  0111         7              off  on   on   on
-  0110         6              off  on   on   off
-  0101         5              off  on   off  on
-  0100         4              off  on   off  off
-  0011         3              off  off  on   on
-  0010         2              off  off  on   off
-  0001         1              off  off  off  on
-  0000         0              off  off  off  off
+  Binary       Decimal        SW   V1   V2   V3   V4
+  --------------------------------------------------
+  11111        31             on   on   on   on   on
+  10101        21             on   off  on   off  on
+  00000        0              off  off  off  off  on
+  --------------------------------------------------
 
  ****************************************************/
 
@@ -55,6 +42,7 @@
 ros::NodeHandle nh;           // ROS Node handle
 
 // Individual Valve Commands
+bool ROS_Sw_Cmd = 0;      // Relay (Pedal) ROS Command
 bool ROS_V1_Cmd = 0;      // Valve 1 ROS Command
 bool ROS_V2_Cmd = 0;      // Valve 2 ROS Command
 bool ROS_V3_Cmd = 0;      // Valve 3 ROS Command
@@ -63,10 +51,11 @@ bool ROS_V4_Cmd = 0;      // Valve 4 ROS Command
 // ROS Subscriber Callback Function:
 void ROS_Cmd_Callback(const std_msgs::Byte& ROS_Cmd_msg) {
   // Perform bit masking to find each valve command
-  ROS_V1_Cmd = ROS_Cmd_msg.data & B1000;
-  ROS_V2_Cmd = ROS_Cmd_msg.data & B0100;
-  ROS_V3_Cmd = ROS_Cmd_msg.data & B0010;
-  ROS_V4_Cmd = ROS_Cmd_msg.data & B0001;
+  ROS_Sw_Cmd = ROS_Cmd_msg.data & B10000;
+  ROS_V1_Cmd = ROS_Cmd_msg.data & B01000;
+  ROS_V2_Cmd = ROS_Cmd_msg.data & B00100;
+  ROS_V3_Cmd = ROS_Cmd_msg.data & B00010;
+  ROS_V4_Cmd = ROS_Cmd_msg.data & B00001;
 }
 
 // Instantiate ROS Subscribers
@@ -79,28 +68,25 @@ std_msgs::Byte ROS_Status_msg;      // ROS Feedback Message
 ros::Publisher ROS_Valve_Pub("ROS_Valve_Status", &ROS_Status_msg);
 
 // Button input pins:
-const int V1_Button_Pin = 3;   // Valve 1 Manual Button Read Pin
-const int V2_Button_Pin = 2;   // Valve 2 Manual Button Read Pin
-const int V3_Button_Pin = 5;   // Valve 3 Manual Button Read Pin
-const int V4_Button_Pin = 4;   // Valve 4 Manual Button Read Pin
+const int V1_Button_Pin = 2;   // Valve 1 Manual Button Read Pin
+const int V2_Button_Pin = 3;   // Valve 2 Manual Button Read Pin
+const int V3_Button_Pin = 4;   // Valve 3 Manual Button Read Pin
+const int V4_Button_Pin = 5;   // Valve 4 Manual Button Read Pin
+const int Sw_Button_Pin = 11;  // Momentary Push Button Read Pin
 
 // Transistor base pins:
-const int V1_Out_Pin = 6;   // Valve 1 Transistor Output Pin
-const int V2_Out_Pin = 7;   // Valve 2 Transistor Output Pin
-const int V3_Out_Pin = 8;   // Valve 3 Transistor Output Pin
-const int V4_Out_Pin = 9;   // Valve 4 Transistor Output Pin
+const int V1_Out_Pin = 7;   // Valve 1 Transistor Output Pin
+const int V2_Out_Pin = 10;  // Valve 2 Transistor Output Pin
+const int V3_Out_Pin = 9;   // Valve 3 Transistor Output Pin
+const int V4_Out_Pin = 8;   // Valve 4 Transistor Output Pin
+const int Sw_Out_Pin = 6;   // Relay (Pedal Switch) Transistor Output Pin
 
 // Button states (0 == OFF, 1 == ON):
 bool V1_Button_State = 0;   // Valve 1 Manual Button State
 bool V2_Button_State = 0;   // Valve 2 Manual Button State
 bool V3_Button_State = 0;   // Valve 3 Manual Button State
 bool V4_Button_State = 0;   // Valve 4 Manual Button State
-
-// Transistor output commands (0 == OFF, 1 == ON):
-bool V1_Out_Cmd = 0;      // Valve 1 Manual Button State
-bool V2_Out_Cmd = 0;      // Valve 2 Manual Button State
-bool V3_Out_Cmd = 0;      // Valve 3 Manual Button State
-bool V4_Out_Cmd = 0;      // Valve 4 Manual Button State
+bool Sw_Button_State = 0;   // Momentary Push Button State
 
 // Output byte msg variable:
 byte Output_msg = 0;
@@ -124,12 +110,14 @@ void setup() {
   pinMode(V2_Button_Pin, INPUT);
   pinMode(V3_Button_Pin, INPUT);
   pinMode(V4_Button_Pin, INPUT);
+  pinMode(Sw_Button_Pin, INPUT);
 
-  // Button pin inputs:
+  // Button pin outputs:
   pinMode(V1_Out_Pin, OUTPUT);
   pinMode(V2_Out_Pin, OUTPUT);
   pinMode(V3_Out_Pin, OUTPUT);
   pinMode(V4_Out_Pin, OUTPUT);
+  pinMode(Sw_Out_Pin, OUTPUT);
 }
 
 void loop() {
@@ -139,6 +127,7 @@ void loop() {
   V2_Button_State = digitalRead(V2_Button_Pin);
   V3_Button_State = digitalRead(V3_Button_Pin);
   V4_Button_State = digitalRead(V4_Button_Pin);
+  Sw_Button_State = digitalRead(Sw_Button_Pin);
 
   // Debugging: print button states to serial monitor
   Serial.print("V1: ");
@@ -151,15 +140,29 @@ void loop() {
   Serial.print(V3_Button_State);
   Serial.print("     ");
   Serial.print("V4: ");
-  Serial.println(V4_Button_State);
+  Serial.print(V4_Button_State);
+  Serial.print("     ");
+  Serial.print("Sw: ");
+  Serial.print(Sw_Button_State);
+  Serial.print("     ");
+  Serial.print("Output: ");
+  Serial.println(Output_msg);
 
   // Reset the output message:
   Output_msg = 0;
 
+  // Update Relay Switch Command
+  if (Sw_Button_State == HIGH || ROS_Sw_Cmd == HIGH) {
+    digitalWrite(Sw_Out_Pin, HIGH);
+    Output_msg = Output_msg | B10000;
+  } else {
+    digitalWrite(Sw_Out_Pin, LOW);
+  }
+
   // Update Valve 1 Command
   if (V1_Button_State == HIGH || ROS_V1_Cmd == HIGH) {
     digitalWrite(V1_Out_Pin, HIGH);
-    Output_msg = Output_msg | B1000;
+    Output_msg = Output_msg | B01000;
   } else {
     digitalWrite(V1_Out_Pin, LOW);
   }
@@ -167,7 +170,7 @@ void loop() {
   // Update Valve 2 Command
   if (V2_Button_State == HIGH || ROS_V2_Cmd == HIGH) {
     digitalWrite(V2_Out_Pin, HIGH);
-    Output_msg = Output_msg | B0100;
+    Output_msg = Output_msg | B00100;
   } else {
     digitalWrite(V2_Out_Pin, LOW);
   }
@@ -175,7 +178,7 @@ void loop() {
   // Update Valve 3 Command
   if (V3_Button_State == HIGH || ROS_V3_Cmd == HIGH) {
     digitalWrite(V3_Out_Pin, HIGH);
-    Output_msg = Output_msg | B0010;
+    Output_msg = Output_msg | B00010;
   } else {
     digitalWrite(V3_Out_Pin, LOW);
   }
@@ -183,7 +186,7 @@ void loop() {
   // Update Valve 4 Command
   if (V4_Button_State == HIGH || ROS_V4_Cmd == HIGH) {
     digitalWrite(V4_Out_Pin, HIGH);
-    Output_msg = Output_msg | B0001;
+    Output_msg = Output_msg | B00001;
   } else {
     digitalWrite(V4_Out_Pin, LOW);
   }
