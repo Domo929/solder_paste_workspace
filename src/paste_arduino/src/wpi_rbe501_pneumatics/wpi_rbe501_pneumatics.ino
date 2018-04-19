@@ -34,6 +34,8 @@
 
  ****************************************************/
 
+//#define USE_USBCON
+
 // ROS Serial Setup:
 #include <ros.h>
 #include <std_msgs/Bool.h>
@@ -94,7 +96,7 @@ byte Output_msg = 0;
 void setup() {
 
   // Serial monitor initialization for debugging
-  Serial.begin(9600);
+//  Serial.begin(9600);
 
   // ROS initialization
   nh.initNode();
@@ -130,23 +132,23 @@ void loop() {
   Sw_Button_State = digitalRead(Sw_Button_Pin);
 
   // Debugging: print button states to serial monitor
-  Serial.print("V1: ");
-  Serial.print(V1_Button_State);
-  Serial.print("     ");
-  Serial.print("V2: ");
-  Serial.print(V2_Button_State);
-  Serial.print("     ");
-  Serial.print("V3: ");
-  Serial.print(V3_Button_State);
-  Serial.print("     ");
-  Serial.print("V4: ");
-  Serial.print(V4_Button_State);
-  Serial.print("     ");
-  Serial.print("Sw: ");
-  Serial.print(Sw_Button_State);
-  Serial.print("     ");
-  Serial.print("Output: ");
-  Serial.println(Output_msg);
+//  Serial.print("V1: ");
+//  Serial.print(V1_Button_State);
+//  Serial.print("     ");
+//  Serial.print("V2: ");
+//  Serial.print(V2_Button_State);
+//  Serial.print("     ");
+//  Serial.print("V3: ");
+//  Serial.print(V3_Button_State);
+//  Serial.print("     ");
+//  Serial.print("V4: ");
+//  Serial.print(V4_Button_State);
+//  Serial.print("     ");
+//  Serial.print("Sw: ");
+//  Serial.print(Sw_Button_State);
+//  Serial.print("     ");
+//  Serial.print("Output: ");
+//  Serial.println(Output_msg);
 
   // Reset the output message:
   Output_msg = 0;
