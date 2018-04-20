@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import argparse
 
 import cv2
@@ -7,24 +9,23 @@ import tf
 from geometry_msgs.msg import Pose
 from std_msgs.msg import Bool
 
-global start_calib
-start_calib = False
-
 # TODO print and determine size
-marker_size = 1
+marker_size = 10
 
 tag_index = 0
 
-
 def start_callback(data):
-    global start_calib
-    start_calib = data
+    global should_start_calib
+    should_start_calib = True
+    print("Got a start message")
 
 
 if __name__ == '__main__':
+    global should_start_calib
+
     parser = argparse.ArgumentParser(description='Handles the PCB Offsets')
 
-    parser.add_argument('index', type=int, required=True,
+    parser.add_argument('index', type=int,
                         help='The /dev/video* index')
     parser.add_argument('path_to_calibration_file', type=str,
                         help='The path to the OpenCV Calibration file for the camera')
@@ -35,9 +36,10 @@ if __name__ == '__main__':
 
     pose_pub = rospy.Publisher('/PCB_Offset', Pose, queue_size=1)
 
-    start_sub = rospy.Subscriber('/Start_Offset', Bool, start_callback)
+    should_start_calib = False
+    start_sub = rospy.Subscriber('/start_offset', Bool, start_callback)
 
-    aruco_dict = aruco.Dictionary_get(aruco.DICT_7X7_1000)
+    aruco_dict = aruco.Dictionary_get(aruco.DICT_4X4_50)
     parameters = aruco.DetectorParameters_create()
 
     cam_mat = None
@@ -45,7 +47,7 @@ if __name__ == '__main__':
 
     fs = cv2.FileStorage()
 
-    fs.open(args['path_to_calibration_file'])
+    fs.open(args['path_to_calibration_file'], cv2.FILE_STORAGE_READ)
 
     if fs.isOpened():
         cam_mat = fs.getNode('CameraMatrix').mat()
@@ -57,29 +59,33 @@ if __name__ == '__main__':
 
     cap = cv2.VideoCapture(args['index'])
 
-    while not rospy.is_shutdown():
-        if start_calib:
+    rate = rospy.Rate(5)
 
+    while not rospy.is_shutdown():
+        # print('looping')
+        global should_start_calib
+        if should_start_calib:
+            print('Starting')
             ret, frame = cap.read()
 
             if ret:
                 frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-                corners, ids, _ = aruco.detectMarkers(frame_gray, aruco_dict,
-                                                      parameters=parameters, cameraMatrix=cam_mat, distCoeff=cam_dst)
-                if ids and len(ids) > 0:
-                    rvec, tvec, _ = aruco.estimatePoseSingleMarkers(corners, marker_size, cam_mat, cam_dst)
+                print('Looking for tags')
+                corners, ids, _ = aruco.detectMarkers(frame_gray, aruco_dict, parameters=parameters)
+                if ids is not None and len(ids) > 0:
+                    print('Found tag')
+                    r_vec, t_vec, _ = aruco.estimatePoseSingleMarkers(corners, marker_size, cam_mat, cam_dst)
 
                     for index in range(len(ids)):
                         if ids[index] == tag_index:
                             Q = tf.transformations.quaternion_from_euler(
-                                rvec[index][0], rvec[index][1], rvec[index][2])
+                                r_vec[index][0], r_vec[index][1], r_vec[index][2])
 
                             pose = Pose()
 
-                            pose.position.x = tvec[index][0]
-                            pose.position.y = tvec[index][1]
-                            pose.position.z = tvec[index][2]
+                            pose.position.x = t_vec[index][0]
+                            pose.position.y = t_vec[index][1]
+                            pose.position.z = t_vec[index][2]
 
                             pose.orientation.x = Q.x
                             pose.orientation.y = Q.y
@@ -88,7 +94,10 @@ if __name__ == '__main__':
 
                             pose_pub.publish(pose)
 
+                            should_start_calib = False
+
                 else:
                     print("Did not find any tags")
             else:
                 print("Error obtaining frame")
+    rate.sleep()
