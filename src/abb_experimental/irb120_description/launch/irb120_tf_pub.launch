@@ -1,0 +1,8 @@
+<!-- TF publisher Launch file -->
+<launch>
+
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find irb120_description)/urdf/irb120.xacro'" />
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
+
+</launch>
