@@ -1,0 +1,8 @@
+Symlinking /home/brkwells/Documents/solder_paste_workspace/src/gerber_import/devel/./_setup_util.py
+Symlinking /home/brkwells/Documents/solder_paste_workspace/src/gerber_import/devel/./setup.sh
+Symlinking /home/brkwells/Documents/solder_paste_workspace/src/gerber_import/devel/./setup.zsh
+Symlinking /home/brkwells/Documents/solder_paste_workspace/src/gerber_import/devel/./env.sh
+Symlinking /home/brkwells/Documents/solder_paste_workspace/src/gerber_import/devel/./setup.bash
+Symlinking /home/brkwells/Documents/solder_paste_workspace/src/gerber_import/devel/share/catkin_tools_prebuild/cmake/catkin_tools_prebuildConfig.cmake
+Symlinking /home/brkwells/Documents/solder_paste_workspace/src/gerber_import/devel/share/catkin_tools_prebuild/cmake/catkin_tools_prebuildConfig-version.cmake
+Symlinking /home/brkwells/Documents/solder_paste_workspace/src/gerber_import/devel/lib/pkgconfig/catkin_tools_prebuild.pc
