@@ -6,11 +6,12 @@ import cv2
 import cv2.aruco as aruco
 import rospy
 import tf
+import numpy as np
 from geometry_msgs.msg import Pose
 from std_msgs.msg import Bool
 
 # TODO print and determine size
-marker_size = 10
+marker_size = 0.01
 
 tag_index = 0
 
@@ -42,15 +43,15 @@ if __name__ == '__main__':
     aruco_dict = aruco.Dictionary_get(aruco.DICT_4X4_50)
     parameters = aruco.DetectorParameters_create()
 
-    cam_mat = None
-    cam_dst = None
+    cam_mat = np.zeros((1,1), np.uint8)
+    cam_dst = np.zeros((1,1), np.uint8)
 
     fs = cv2.FileStorage()
 
     fs.open(args['path_to_calibration_file'], cv2.FILE_STORAGE_READ)
 
     if fs.isOpened():
-        cam_mat = fs.getNode('CameraMatrix').mat()
+        cam_mat = fs.getNode('Camera_Matrix').mat()
         cam_dst = fs.getNode('Distortion_Coefficients').mat()
         fs.release()
     else:
@@ -78,19 +79,20 @@ if __name__ == '__main__':
 
                     for index in range(len(ids)):
                         if ids[index] == tag_index:
+                            print(r_vec)
                             Q = tf.transformations.quaternion_from_euler(
-                                r_vec[index][0], r_vec[index][1], r_vec[index][2])
+                                r_vec[index][0][0], r_vec[index][0][1], r_vec[index][0][2])
 
                             pose = Pose()
 
-                            pose.position.x = t_vec[index][0]
-                            pose.position.y = t_vec[index][1]
-                            pose.position.z = t_vec[index][2]
+                            pose.position.x = t_vec[index][0][0]
+                            pose.position.y = t_vec[index][0][1]
+                            pose.position.z = t_vec[index][0][2]
 
-                            pose.orientation.x = Q.x
-                            pose.orientation.y = Q.y
-                            pose.orientation.z = Q.z
-                            pose.orientation.w = Q.w
+                            pose.orientation.x = Q[0]
+                            pose.orientation.y = Q[1]
+                            pose.orientation.z = Q[2]
+                            pose.orientation.w = Q[3]
 
                             pose_pub.publish(pose)
 
