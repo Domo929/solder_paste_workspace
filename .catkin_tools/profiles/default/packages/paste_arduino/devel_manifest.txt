@@ -1,0 +1,21 @@
+paste_arduino
+/home/djcupo/solder_paste_workspace/devel/.private/paste_arduino/include/paste_arduino/DepositPaste.h /home/djcupo/solder_paste_workspace/devel/include/paste_arduino/DepositPaste.h
+/home/djcupo/solder_paste_workspace/devel/.private/paste_arduino/include/paste_arduino/DepositPasteRequest.h /home/djcupo/solder_paste_workspace/devel/include/paste_arduino/DepositPasteRequest.h
+/home/djcupo/solder_paste_workspace/devel/.private/paste_arduino/include/paste_arduino/DepositPasteResponse.h /home/djcupo/solder_paste_workspace/devel/include/paste_arduino/DepositPasteResponse.h
+/home/djcupo/solder_paste_workspace/devel/.private/paste_arduino/share/common-lisp/ros/paste_arduino/srv/_package.lisp /home/djcupo/solder_paste_workspace/devel/share/common-lisp/ros/paste_arduino/srv/_package.lisp
+/home/djcupo/solder_paste_workspace/devel/.private/paste_arduino/share/common-lisp/ros/paste_arduino/srv/_package_DepositPaste.lisp /home/djcupo/solder_paste_workspace/devel/share/common-lisp/ros/paste_arduino/srv/_package_DepositPaste.lisp
+/home/djcupo/solder_paste_workspace/devel/.private/paste_arduino/share/common-lisp/ros/paste_arduino/srv/DepositPaste.lisp /home/djcupo/solder_paste_workspace/devel/share/common-lisp/ros/paste_arduino/srv/DepositPaste.lisp
+/home/djcupo/solder_paste_workspace/devel/.private/paste_arduino/share/common-lisp/ros/paste_arduino/srv/paste_arduino-srv.asd /home/djcupo/solder_paste_workspace/devel/share/common-lisp/ros/paste_arduino/srv/paste_arduino-srv.asd
+/home/djcupo/solder_paste_workspace/devel/.private/paste_arduino/share/roseus/ros/paste_arduino/manifest.l /home/djcupo/solder_paste_workspace/devel/share/roseus/ros/paste_arduino/manifest.l
+/home/djcupo/solder_paste_workspace/devel/.private/paste_arduino/share/roseus/ros/paste_arduino/srv/DepositPaste.l /home/djcupo/solder_paste_workspace/devel/share/roseus/ros/paste_arduino/srv/DepositPaste.l
+/home/djcupo/solder_paste_workspace/devel/.private/paste_arduino/share/paste_arduino/cmake/paste_arduinoConfig.cmake /home/djcupo/solder_paste_workspace/devel/share/paste_arduino/cmake/paste_arduinoConfig.cmake
+/home/djcupo/solder_paste_workspace/devel/.private/paste_arduino/share/paste_arduino/cmake/paste_arduino-msg-extras.cmake /home/djcupo/solder_paste_workspace/devel/share/paste_arduino/cmake/paste_arduino-msg-extras.cmake
+/home/djcupo/solder_paste_workspace/devel/.private/paste_arduino/share/paste_arduino/cmake/paste_arduinoConfig-version.cmake /home/djcupo/solder_paste_workspace/devel/share/paste_arduino/cmake/paste_arduinoConfig-version.cmake
+/home/djcupo/solder_paste_workspace/devel/.private/paste_arduino/share/paste_arduino/cmake/paste_arduino-msg-paths.cmake /home/djcupo/solder_paste_workspace/devel/share/paste_arduino/cmake/paste_arduino-msg-paths.cmake
+/home/djcupo/solder_paste_workspace/devel/.private/paste_arduino/share/gennodejs/ros/paste_arduino/_index.js /home/djcupo/solder_paste_workspace/devel/share/gennodejs/ros/paste_arduino/_index.js
+/home/djcupo/solder_paste_workspace/devel/.private/paste_arduino/share/gennodejs/ros/paste_arduino/srv/_index.js /home/djcupo/solder_paste_workspace/devel/share/gennodejs/ros/paste_arduino/srv/_index.js
+/home/djcupo/solder_paste_workspace/devel/.private/paste_arduino/share/gennodejs/ros/paste_arduino/srv/DepositPaste.js /home/djcupo/solder_paste_workspace/devel/share/gennodejs/ros/paste_arduino/srv/DepositPaste.js
+/home/djcupo/solder_paste_workspace/devel/.private/paste_arduino/lib/pkgconfig/paste_arduino.pc /home/djcupo/solder_paste_workspace/devel/lib/pkgconfig/paste_arduino.pc
+/home/djcupo/solder_paste_workspace/devel/.private/paste_arduino/lib/python2.7/dist-packages/paste_arduino/__init__.py /home/djcupo/solder_paste_workspace/devel/lib/python2.7/dist-packages/paste_arduino/__init__.py
+/home/djcupo/solder_paste_workspace/devel/.private/paste_arduino/lib/python2.7/dist-packages/paste_arduino/srv/__init__.py /home/djcupo/solder_paste_workspace/devel/lib/python2.7/dist-packages/paste_arduino/srv/__init__.py
+/home/djcupo/solder_paste_workspace/devel/.private/paste_arduino/lib/python2.7/dist-packages/paste_arduino/srv/_DepositPaste.py /home/djcupo/solder_paste_workspace/devel/lib/python2.7/dist-packages/paste_arduino/srv/_DepositPaste.py

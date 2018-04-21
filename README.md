@@ -28,6 +28,7 @@ For example. If I am writing a node that used the [vision_opencv](http://wiki.ro
 1. moveit!
 2. ROS industrial
 3. ROS Serial
+4. USB Camera
 
 ## Simulation using Gazebo
 1. Launch gazebo environment for abb_irb120 (more objects to be added)
@@ -66,3 +67,6 @@ After running this, you can see the robot moves to several poses.
 roslaunch abb_irb120_support robot_interface_download_irb120.launch robot_ip:=192.168.125.1
 
 3. Follow the steps in 5.3
+
+## Run camera using usb_camera in ROS
+rosrun usb_cam usb_cam_node _video_device:=/dev/video1 _camera_name:=cam1

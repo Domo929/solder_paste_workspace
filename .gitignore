@@ -1,3 +1,5 @@
 build/
 devel/
-src/.idea/
+logs/
+src/pcb_offsets/.idea/
+
