@@ -32,7 +32,7 @@ For example. If I am writing a node that used the [vision_opencv](http://wiki.ro
 
 ## Simulation using Gazebo
 1. Launch gazebo environment for abb_irb120 (more objects to be added)
-roslaunch abb_irb120_gazebo irb120_gazebo.launch
+roslaunch abb_irb120_gazebo irb120_gazebo2.launch
 
 2. Launch move_group with rviz for visualization
 roslaunch abb_irb120_moveit_config move_group.launch 
