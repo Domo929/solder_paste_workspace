@@ -1,4 +1,5 @@
 build/
 devel/
+logs/
 src/pcb_offsets/.idea/
 
