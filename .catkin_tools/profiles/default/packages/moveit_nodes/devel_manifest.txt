@@ -1,0 +1,11 @@
+moveit_interface
+/home/djcupo/solder_paste_workspace/devel/.private/moveit_nodes/share/moveit_nodes/cmake/moveit_nodesConfig.cmake /home/djcupo/solder_paste_workspace/devel/share/moveit_nodes/cmake/moveit_nodesConfig.cmake
+/home/djcupo/solder_paste_workspace/devel/.private/moveit_nodes/share/moveit_nodes/cmake/moveit_nodesConfig-version.cmake /home/djcupo/solder_paste_workspace/devel/share/moveit_nodes/cmake/moveit_nodesConfig-version.cmake
+/home/djcupo/solder_paste_workspace/devel/.private/moveit_nodes/lib/moveit_nodes/ros_api_tutorial /home/djcupo/solder_paste_workspace/devel/lib/moveit_nodes/ros_api_tutorial
+/home/djcupo/solder_paste_workspace/devel/.private/moveit_nodes/lib/moveit_nodes/planning_scene_ros_api /home/djcupo/solder_paste_workspace/devel/lib/moveit_nodes/planning_scene_ros_api
+/home/djcupo/solder_paste_workspace/devel/.private/moveit_nodes/lib/moveit_nodes/planning_scene /home/djcupo/solder_paste_workspace/devel/lib/moveit_nodes/planning_scene
+/home/djcupo/solder_paste_workspace/devel/.private/moveit_nodes/lib/moveit_nodes/kinematic_model_tutorial /home/djcupo/solder_paste_workspace/devel/lib/moveit_nodes/kinematic_model_tutorial
+/home/djcupo/solder_paste_workspace/devel/.private/moveit_nodes/lib/moveit_nodes/planning_pipeline /home/djcupo/solder_paste_workspace/devel/lib/moveit_nodes/planning_pipeline
+/home/djcupo/solder_paste_workspace/devel/.private/moveit_nodes/lib/moveit_nodes/motion_planning_api /home/djcupo/solder_paste_workspace/devel/lib/moveit_nodes/motion_planning_api
+/home/djcupo/solder_paste_workspace/devel/.private/moveit_nodes/lib/moveit_nodes/move_group_interface /home/djcupo/solder_paste_workspace/devel/lib/moveit_nodes/move_group_interface
+/home/djcupo/solder_paste_workspace/devel/.private/moveit_nodes/lib/pkgconfig/moveit_nodes.pc /home/djcupo/solder_paste_workspace/devel/lib/pkgconfig/moveit_nodes.pc

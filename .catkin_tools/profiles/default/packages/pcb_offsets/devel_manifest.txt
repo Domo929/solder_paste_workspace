@@ -1,0 +1,5 @@
+pcb_offsets
+/home/djcupo/solder_paste_workspace/devel/.private/pcb_offsets/share/pcb_offsets/cmake/pcb_offsetsConfig.cmake /home/djcupo/solder_paste_workspace/devel/share/pcb_offsets/cmake/pcb_offsetsConfig.cmake
+/home/djcupo/solder_paste_workspace/devel/.private/pcb_offsets/share/pcb_offsets/cmake/pcb_offsetsConfig-version.cmake /home/djcupo/solder_paste_workspace/devel/share/pcb_offsets/cmake/pcb_offsetsConfig-version.cmake
+/home/djcupo/solder_paste_workspace/devel/.private/pcb_offsets/lib/pkgconfig/pcb_offsets.pc /home/djcupo/solder_paste_workspace/devel/lib/pkgconfig/pcb_offsets.pc
+/home/djcupo/solder_paste_workspace/devel/.private/pcb_offsets/lib/pcb_offsets/PCB_Offsets_Node /home/djcupo/solder_paste_workspace/devel/lib/pcb_offsets/PCB_Offsets_Node
