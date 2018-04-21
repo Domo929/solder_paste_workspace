@@ -125,6 +125,7 @@ class SolderPaste:
             print "Service call failed: %s" % e
 
     def paste(self):
+        cnt = 0
         for pad_info in self.pcb_pads_info:
             x = pad_info[0]
             y = pad_info[1]
@@ -132,12 +133,13 @@ class SolderPaste:
             dt = 1.0*a
             pad_p_in_pcb = np.array([x, y, self.paste_z, 1])
             pad_p_in_world = np.dot(self.pcb_pose, pad_p_in_pcb)
-            print('pad postion in pcb is: {}'.format(pad_p_in_pcb[:3]))
+            print('pad {}/{} postion in pcb is: {}'.format(cnt, len(self.pcb_pads_info), pad_p_in_pcb[:3]))
             print('pad postion in world is: {}'.format(pad_p_in_world[:3]))
             if pad_info == self.pcb_pads_info[0]:
                 self.paste_once(pad_p_in_world[:3], dt, True)
             else:
                 self.paste_once(pad_p_in_world[:3], dt, False)
+            cnt += 1
 
     def request_mask_info(self):
         rospy.wait_for_service('/gerber_import')
@@ -146,10 +148,10 @@ class SolderPaste:
             resp = gerber_mask_handle('/tmp/test.grb')
             #resp.mask
             #m = read_solder_maskResponse()
-            num = resp.mask.solder_pads.size()
+            num = len(resp.mask.solder_pads)
             for i in range(num):
-                x = resp.mask.solder_pads[i].x_offset
-                y = resp.mask.solder_pads[i].y_offset
+                x = resp.mask.solder_pads[i].x_offset / 1000.0
+                y = resp.mask.solder_pads[i].y_offset / 1000.0
                 a = resp.mask.solder_pads[i].area
 
                 self.pcb_pads_info.append([x, y, a])
