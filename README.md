@@ -70,3 +70,22 @@ roslaunch abb_irb120_support robot_interface_download_irb120.launch robot_ip:=19
 
 ## Run camera using usb_camera in ROS
 rosrun usb_cam usb_cam_node _video_device:=/dev/video1 _camera_name:=cam1
+
+## Final usage guide
+1. Connect Robot with Ethernet cable and build a connection between Ubuntu and the robot
+
+2. Connect ROS to the robot
+roslaunch abb_irb120_support robot_interface_download_irb120.launch robot_ip:=192.168.125.1
+
+3. Run gerber import server
+rosrun gerber_import gerber_import
+
+4. Run pneumatic control server
+rosrun paste_arduino PneumaticControl.py 
+
+5. Run trajectory generation 
+rosrun abb_control trajectory_generator.py
+
+6. Run soldering paste task
+rosrun abb_control solder_paste.py 
+
