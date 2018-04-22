@@ -80,12 +80,21 @@ roslaunch abb_irb120_support robot_interface_download_irb120.launch robot_ip:=19
 3. Run gerber import server
 rosrun gerber_import gerber_import
 
-4. Run pneumatic control server
+4. Build the connection between ROS and Arduino
+rosrun rosserial_python serial_node.py _baud:=57600 _port:=/dev/ttyACM0
+
+Use the following command to see what is the name of the Arduino port.
+dmesg | grep tty
+
+If you don't have permission to do that, just try this
+sudo chmod 666 /dev/ttyACM0
+
+5. Run pneumatic control server
 rosrun paste_arduino PneumaticControl.py 
 
-5. Run trajectory generation 
+6. Run trajectory generation 
 rosrun abb_control trajectory_generator.py
 
-6. Run soldering paste task
+7. Run soldering paste task
 rosrun abb_control solder_paste.py 
 

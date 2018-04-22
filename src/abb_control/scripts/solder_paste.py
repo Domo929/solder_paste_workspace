@@ -10,7 +10,7 @@ from geometry_msgs.msg import Pose
 from geometry import pose_msg_from_matrix
 from gerber_import.srv import *
 from paste_arduino.srv import *
-
+import matplotlib.pyplot as plt
 
 
 hold_tool = 0
@@ -57,8 +57,8 @@ class SolderPaste:
         '''
 
         self.paste_duration = 0.5
-        self.paste_z = 0.301
-        self.move_z = 0.305
+        self.paste_z = 0.250
+        self.move_z = 0.253
 
         self.request_mask_info()
 
@@ -150,6 +150,7 @@ class SolderPaste:
             y = pad_info[1]
             a = pad_info[2]
             dt = 1.0*a
+            dt = 0.5
             pad_p_in_pcb = np.array([x, y, self.paste_z, 1])
             pad_p_in_world = np.dot(self.pcb_pose, pad_p_in_pcb)
             print('pad {}/{} postion in pcb is: {}'.format(cnt, len(self.pcb_pads_info), pad_p_in_pcb[:3]))
@@ -168,13 +169,18 @@ class SolderPaste:
             #resp.mask
             #m = read_solder_maskResponse()
             num = len(resp.mask.solder_pads)
+            p_x = []
+            p_y = []
             for i in range(num):
-                x = resp.mask.solder_pads[i].x_offset / 1000.0
-                y = resp.mask.solder_pads[i].y_offset / 1000.0
+                x = resp.mask.solder_pads[i].x_offset * 25.4 / 1000.0
+                y = resp.mask.solder_pads[i].y_offset * 25.4 / 1000.0
                 a = resp.mask.solder_pads[i].area
-
+                p_x.append(x)
+                p_y.append(y)
                 self.pcb_pads_info.append([x, y, a])
             print "Get {} pads' info successfully".format(num)
+            plt.scatter(p_x, p_y)
+            plt.show()
         except rospy.ServiceException, e:
             print "Service call failed: %s" % e
 
