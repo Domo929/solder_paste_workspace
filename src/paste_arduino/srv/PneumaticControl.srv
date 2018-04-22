@@ -1,0 +1,4 @@
+std_msgs/Int8 whatAction
+std_msgs/Duration howLong
+---
+std_msgs/Bool isDone

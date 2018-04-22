@@ -1,0 +1,4 @@
+abb_experimental/irb120_control
+/home/djcupo/solder_paste_workspace/devel/.private/irb120_control/share/irb120_control/cmake/irb120_controlConfig.cmake /home/djcupo/solder_paste_workspace/devel/share/irb120_control/cmake/irb120_controlConfig.cmake
+/home/djcupo/solder_paste_workspace/devel/.private/irb120_control/share/irb120_control/cmake/irb120_controlConfig-version.cmake /home/djcupo/solder_paste_workspace/devel/share/irb120_control/cmake/irb120_controlConfig-version.cmake
+/home/djcupo/solder_paste_workspace/devel/.private/irb120_control/lib/pkgconfig/irb120_control.pc /home/djcupo/solder_paste_workspace/devel/lib/pkgconfig/irb120_control.pc

@@ -1,0 +1,4 @@
+abb_experimental/abb_irb120_support
+/home/djcupo/solder_paste_workspace/devel/.private/abb_irb120_support/share/abb_irb120_support/cmake/abb_irb120_supportConfig-version.cmake /home/djcupo/solder_paste_workspace/devel/share/abb_irb120_support/cmake/abb_irb120_supportConfig-version.cmake
+/home/djcupo/solder_paste_workspace/devel/.private/abb_irb120_support/share/abb_irb120_support/cmake/abb_irb120_supportConfig.cmake /home/djcupo/solder_paste_workspace/devel/share/abb_irb120_support/cmake/abb_irb120_supportConfig.cmake
+/home/djcupo/solder_paste_workspace/devel/.private/abb_irb120_support/lib/pkgconfig/abb_irb120_support.pc /home/djcupo/solder_paste_workspace/devel/lib/pkgconfig/abb_irb120_support.pc

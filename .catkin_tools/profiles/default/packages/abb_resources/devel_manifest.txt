@@ -1,0 +1,4 @@
+abb/abb_resources
+/home/djcupo/solder_paste_workspace/devel/.private/abb_resources/share/abb_resources/cmake/abb_resourcesConfig-version.cmake /home/djcupo/solder_paste_workspace/devel/share/abb_resources/cmake/abb_resourcesConfig-version.cmake
+/home/djcupo/solder_paste_workspace/devel/.private/abb_resources/share/abb_resources/cmake/abb_resourcesConfig.cmake /home/djcupo/solder_paste_workspace/devel/share/abb_resources/cmake/abb_resourcesConfig.cmake
+/home/djcupo/solder_paste_workspace/devel/.private/abb_resources/lib/pkgconfig/abb_resources.pc /home/djcupo/solder_paste_workspace/devel/lib/pkgconfig/abb_resources.pc

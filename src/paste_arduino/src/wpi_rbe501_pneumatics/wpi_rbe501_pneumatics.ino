@@ -6,7 +6,7 @@
 
   Installation Requirements:
   - You must install the rosserial library in your Arduino IDE
-  - The board in the Arduino module is an official Arduino Micro
+  - The board in the Arduino module is an unofficial Arduino Uno
 
   Designed to interface with four P20381RF pneumatic valves and the
   3.5mm pedal switch jack of the KLT82A.
@@ -33,8 +33,6 @@
   --------------------------------------------------
 
  ****************************************************/
-
-//#define USE_USBCON
 
 // ROS Serial Setup:
 #include <ros.h>
@@ -96,7 +94,7 @@ byte Output_msg = 0;
 void setup() {
 
   // Serial monitor initialization for debugging
-//  Serial.begin(9600);
+  //Serial.begin(9600);
 
   // ROS initialization
   nh.initNode();
@@ -132,24 +130,26 @@ void loop() {
   Sw_Button_State = digitalRead(Sw_Button_Pin);
 
   // Debugging: print button states to serial monitor
-//  Serial.print("V1: ");
-//  Serial.print(V1_Button_State);
-//  Serial.print("     ");
-//  Serial.print("V2: ");
-//  Serial.print(V2_Button_State);
-//  Serial.print("     ");
-//  Serial.print("V3: ");
-//  Serial.print(V3_Button_State);
-//  Serial.print("     ");
-//  Serial.print("V4: ");
-//  Serial.print(V4_Button_State);
-//  Serial.print("     ");
-//  Serial.print("Sw: ");
-//  Serial.print(Sw_Button_State);
-//  Serial.print("     ");
-//  Serial.print("Output: ");
-//  Serial.println(Output_msg);
-
+  //  - note, when the ROS code is not commented out, serial output will be affected
+  /*
+  Serial.print("V1: ");
+  Serial.print(V1_Button_State);
+  Serial.print("     ");
+  Serial.print("V2: ");
+  Serial.print(V2_Button_State);
+  Serial.print("     ");
+  Serial.print("V3: ");
+  Serial.print(V3_Button_State);
+  Serial.print("     ");
+  Serial.print("V4: ");
+  Serial.print(V4_Button_State);
+  Serial.print("     ");
+  Serial.print("Sw: ");
+  Serial.print(Sw_Button_State);
+  Serial.print("     ");
+  Serial.print("Output: ");
+  Serial.println(Output_msg);
+*/
   // Reset the output message:
   Output_msg = 0;
 
@@ -196,7 +196,7 @@ void loop() {
   ROS_Status_msg.data = Output_msg;
 
   // Publish the status message
-  ROS_Valve_Pub.publish( &ROS_Status_msg );
+ ROS_Valve_Pub.publish( &ROS_Status_msg );
 
   // Update the ROS Node
   nh.spinOnce();
