@@ -9,6 +9,13 @@ from sensor_msgs.msg import JointState
 from geometry_msgs.msg import Pose
 from geometry import pose_msg_from_matrix
 from gerber_import.srv import *
+from paste_arduino.srv import *
+
+
+
+hold_tool = 0
+drop_tool = 1
+paste_dispense = 2
 
 
 class SolderPaste:
@@ -105,7 +112,19 @@ class SolderPaste:
 
         # 3. paste
         rospy.loginfo('Pasting...')
-        rospy.sleep(1)
+        try:
+            desposit_paste = rospy.ServiceProxy('Pneumatic_Control', DepositPaste)
+            paste_req = DepositPasteRequest()
+            paste_req.howLong = dt
+            paste_req.whatAction = paste_dispense
+            paste_res = desposit_paste(paste_req)
+            if paste_res.isDone:
+                print('Successfully deposited paste')
+            else:
+                print('Failed to deposite paste')
+        except rospy.ServiceException, e:
+            print "Service call failed: %s" % e
+        rospy.sleep(0.1)
 
         # 4. move up
         rospy.loginfo('Moving up...')
@@ -145,7 +164,7 @@ class SolderPaste:
         rospy.wait_for_service('/gerber_import')
         try:
             gerber_mask_handle = rospy.ServiceProxy('/gerber_import', read_solder_mask)
-            resp = gerber_mask_handle('/tmp/test.grb')
+            resp = gerber_mask_handle('/tmp/solder_mask.grb')
             #resp.mask
             #m = read_solder_maskResponse()
             num = len(resp.mask.solder_pads)
@@ -158,6 +177,7 @@ class SolderPaste:
             print "Get {} pads' info successfully".format(num)
         except rospy.ServiceException, e:
             print "Service call failed: %s" % e
+
 
 def main():
     n = rospy.init_node('solder_paste')

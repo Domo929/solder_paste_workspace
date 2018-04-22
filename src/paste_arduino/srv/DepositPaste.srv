@@ -1,0 +1,4 @@
+int8 whatAction
+float32 howLong
+---
+bool isDone
