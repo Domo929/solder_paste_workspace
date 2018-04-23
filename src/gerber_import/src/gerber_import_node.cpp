@@ -138,11 +138,9 @@ bool set_pad_from_aperture_info(gerber_import::pad& pad,
   }
 
   if (valid_offset != 0) {
-    // top left corner of aperture is at net->stop,
-    // adding half the width and half the height gives
-    // the offset for the center point of the pad
-    pad.x_offset = net->stop_x + (width/2.0);
-    pad.y_offset = net->stop_y + (height/2.0);
+    // net->stop corresponds to the offset for the center point of the pad
+    pad.x_offset = net->stop_x;
+    pad.y_offset = net->stop_y;
     // area was calculated based on the pad type above
     pad.area = area;
   }
