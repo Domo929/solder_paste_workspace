@@ -106,16 +106,24 @@ bool set_pad_from_aperture_info(gerber_import::pad& pad,
 {
   int valid_offset = 1;
   float area = 0.0;
+  float width = 0.0;
+  float height = 0.0;
   
   switch(aperture->type) {
   case GERBV_APTYPE_CIRCLE: // a round aperture
     area = M_PI*aperture->parameter[0]/2.0;
+    width = aperture->parameter[0];
+    height = aperture->parameter[0];
     break;
   case GERBV_APTYPE_RECTANGLE: // a rectangular aperture 
     area = aperture->parameter[0]*aperture->parameter[1];
+    width = aperture->parameter[0];
+    height = aperture->parameter[1];
     break;
   case GERBV_APTYPE_OVAL: // an ovular (obround) aperture
     area = M_PI*(aperture->parameter[0]/2.0)*(aperture->parameter[1]/2.0);
+    width = aperture->parameter[0];
+    height = aperture->parameter[1];
     break;
   case GERBV_APTYPE_POLYGON: // a polygon aperture
     area = aperture->parameter[0]*aperture->parameter[1];
@@ -130,8 +138,12 @@ bool set_pad_from_aperture_info(gerber_import::pad& pad,
   }
 
   if (valid_offset != 0) {
-    pad.x_offset = (net->stop_x + net->start_x)/2.0;
-    pad.y_offset = (net->stop_y + net->start_y)/2.0;;
+    // top left corner of aperture is at net->stop,
+    // adding half the width and half the height gives
+    // the offset for the center point of the pad
+    pad.x_offset = net->stop_x + (width/2.0);
+    pad.y_offset = net->stop_y + (height/2.0);
+    // area was calculated based on the pad type above
     pad.area = area;
   }
 
