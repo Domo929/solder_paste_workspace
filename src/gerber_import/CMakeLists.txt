@@ -18,6 +18,8 @@ pkg_search_module(GERBV REQUIRED libgerbv)
 
 find_package(catkin REQUIRED
   COMPONENTS
+  genmsg
+  roscpp
     moveit_core
     moveit_ros_planning
     moveit_ros_planning_interface
@@ -135,13 +137,12 @@ include_directories(
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-# add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(${PROJECT_NAME} src/gerber_import_node.cpp)
-add_executable(gerber_import_client src/gerber_import_client.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -151,7 +152,7 @@ add_executable(gerber_import_client src/gerber_import_client.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-# add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(${PROJECT_NAME} gerber_import_generate_messages_cpp)
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(${PROJECT_NAME}
@@ -160,6 +161,8 @@ target_link_libraries(${PROJECT_NAME}
   gerbv
 )
 
+add_executable(gerber_import_client src/gerber_import_client.cpp)
+add_dependencies(gerber_import_client gerber_import_generate_messages_cpp)
 target_link_libraries(gerber_import_client ${catkin_LIBRARIES})
 
 #############
