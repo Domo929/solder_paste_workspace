@@ -8,6 +8,7 @@ from abb_control.srv import *
 from sensor_msgs.msg import JointState
 from geometry_msgs.msg import Pose
 from geometry import pose_msg_from_matrix
+import modern_robotics as mr
 
 
 class HandEyeCalibrationMotion:
@@ -36,10 +37,12 @@ class HandEyeCalibrationMotion:
         y_scales = [-1, 0, 1]
         axis = np.array([0, 0, 0])
         p_z = np.array([0, 0, self.r])
+        pose_cnt = 0
         for angle in self.angles:
             print('angle %s' % angle)
             for x_s in x_scales:
                 for y_s in y_scales:
+                    pose_cnt += 1
                     angle_use = 0
                     if x_s == 0 and y_s == 0:
                         axis[0] = 1
@@ -49,16 +52,18 @@ class HandEyeCalibrationMotion:
                         axis[1] = y_s
                         axis = axis / np.linalg.norm(axis)
                         angle_use = angle
-                    print('axis:')
-                    print(axis)
+                    #print('axis:')
+                    #print(axis)
                     q = Quaternion(axis=[axis[0], axis[1], axis[2]], angle=angle_use)
                     R = q.rotation_matrix
                     #print('R:')
                     #print(R)
                     p = np.dot(R, p_z) + np.array([self.c_x, self.c_y, self.c_z])
-                    print('p %s', p)
+                    #print('p {}'.format(p))
                     q = q * self.work_home_q
-
+                    #print(mr.RpToTrans(R, p))
+                    print("RRB{} = {}".format(pose_cnt, R))
+                    print("PRB{} = {}".format(pose_cnt, p))
                     try:
                         move_to_pose = rospy.ServiceProxy('move_to_pose', MoveToPose)
                         req = MoveToPoseRequest()

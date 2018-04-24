@@ -15,6 +15,7 @@ from math import pi
 import copy
 from geometry import *
 from pyquaternion import Quaternion
+import tf
 
 
 '''
@@ -169,6 +170,16 @@ class Arm:
     def joint_state_callback(self, data):
         for i in range(6):
             self.joint_position[i] = data.position[i]
+
+        x = self.forward_kinematics(self.joint_position, 'end')
+
+        br = tf.TransformBroadcaster()
+        q = Quaternion(matrix=x)
+        br.sendTransform((x[0,3], x[1,3], x[2,3]),
+                         (q[1], q[2], q[3], q[0]),
+                         rospy.Time.now(),
+                         "ee_link",
+                         "base_link")
 
     def forward_kinematics(self, angles, frame='end'):
         if frame == 'camera':
